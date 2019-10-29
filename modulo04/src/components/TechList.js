@@ -1,15 +1,28 @@
 import React, { Component } from 'react'; 
+import TechItem from '../components/TechItem';
 
 class TechList extends Component {
   state = {
     newTech: '',
-    techs: [
-      'Node.js',
-      'ReactJS',
-      'React Native'
-    ]
+    techs: []
   }
   
+  // Executado assim que o componente aparece em tela
+  componentDidMount() {
+    const techs = localStorage.getItem('techs'); 
+
+    if (techs) {
+      this.setState({ techs:JSON.parse(techs)})
+    }
+  }
+
+  // Executado sempre que houver uma alteraçã nas props ou estates
+  componentDidUpdate(_, prevState) {
+    if (prevState.tech != this.state.techs) {
+      localStorage.setItem('techs', JSON.stringify(this.state.techs));
+    }
+  }
+
   handleInputChange = e => {
     this.setState({ newTech: e.target.value });
   }
@@ -31,11 +44,7 @@ class TechList extends Component {
     return (
       <form onSubmit={this.handleSubmit}>     
         <ul>
-          { this.state.techs.map(tech => (
-            <li key={tech}>{ tech }
-            <button type="button" onClick={() => this.handleRemove(tech)}> X </button>
-            </li>
-            ))}
+          { this.state.techs.map(tech => <TechItem key={tech} tech={tech} onDelete={() => this.handleRemove(tech)}/>)}
         </ul>
         <input type="text" 
         onChange={this.handleInputChange}
