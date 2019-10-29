@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Twitter</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="root">
+    <header id="main-header">
+      <div class="content">
+        <nav>
+          <ul>
+          <li><img src="assets/img/home.svg" alt=""> Home</li>
+          <li><img src="assets/img/notification.svg" alt=""> Notifications</li>
+          <li><img src="assets/img/message.svg" alt=""> Messages</li>          
+        </ul>
+        </nav>      
+        <img src="assets/img/logo.svg" alt="">
+
+        <div class="side">                    
+            <input type="text" placeholder="Search on Twitter">
+          <img src="assets/img/avatar.png" alt="">
+          <button>Tweet</button>        
+              <!-- Rounded switch -->
+            <label class="switch">                  
+              <input type="checkbox" checked onchange="chengeThema()" id="thema" placeholder="Thema">
+              <span class="slider round"></span> 
+              <label>Thema</label>
+            </label>           
+          </div>
+          
+        </div>
+      </div>
+    </header>
+
+    <div class="banner">
+      <p>My Copy Twitter learning in course RocketSeat!</p>
+    </div>
+
+    <div class="bar">
+      <div class="content">
+        <ul>
+          <li class="active">
+            <span>Tweets</span>
+            <strong>12354</strong>
+          </li>
+          <li>
+            <span>Followings</span>
+            <strong>880</strong>
+          </li>
+          <li>
+            <span>Followers</span>
+            <strong>650</strong>
+          </li>
+          <li>
+            <span>Favorites</span>
+            <strong>75</strong>
+          </li>
+        </ul>
+        <div class="actions">
+          <button>Follow</button>
+          <img src="/assets/img/more.svg" alt="More">
+        </div>
+      </div>
+    </div>
+    <div class="wrapper-content content">
+      <aside class="profile">
+        <img class="avatar" src="/assets/img/avatar.png" alt="Profile image">
+        <h1>Willian</h1>
+        <span>@wil-g2</span>
+        <p>FullStack, frontend Developer, backend Developer</p>
+        <ul class="list">
+          <li><img src="assets/img/place.svg" alt="place"> Varginha, Brazil</li>
+          <li><img src="assets/img/url.svg" alt="url"> wil-g2.be</li>
+          <li><img src="assets/img/joined.svg" alt="joined"> Joined August 2010</li>
+          <li><img src="assets/img/born.svg" alt="born"> Born the 12th of May 1992</li>
+        </ul>
+
+        <div class="widget followers">
+          <strong> <img src="/assets/img/followers.svg" alt="followers">80 followers that you know. </strong>
+          <ul>
+            <li><img src="https://cdn.pixabay.com/photo/2014/04/03/10/32/businessman-310819__340.png" alt="Avatar"></li>
+            <li><img src="https://cdn.pixabay.com/photo/2013/07/13/10/07/man-156584__340.png" alt="Avatar"></li>
+            <li><img src="https://cdn.pixabay.com/photo/2016/03/31/19/58/avatar-1295429__340.png" alt="Avatar"></li>
+            <li><img src="https://cdn.pixabay.com/photo/2016/09/01/08/25/smiley-1635456__340.png" alt="Avatar"></li>
+            <li><img src="/assets/img/avatar.png" alt="Avatar"></li>
+            <li><img src="/assets/img/avatar.png" alt="Avatar"></li>
+            <li><img src="/assets/img/avatar.png" alt="Avatar"></li>
+            <li><img src="/assets/img/avatar.png" alt="Avatar"></li>           
+          </ul>
+        </div>
+        
+        <div class="widget images">
+          <strong> <img src="/assets/img/images.svg" alt="images">250 Photos and videos. </strong>
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+
+      </aside>
+
+      <section class="timeline">
+        <nav>
+          <a href="" class="active">Tweets</a>
+          <a href="">Tweets and replies</a>
+          <a href="">Medias</a>
+        </nav>
+        
+        <ul class="tweets">
+          <li>
+            <img src="/assets/img/avatar.png" alt="">
+            <div class="info">
+              <strong>Willian <span>@wil-g2</span></strong>
+              <p>app @itsmeDigitalID désinstallée puis réinstallée, comment faire pour retrouver son compte ? 
+                Ma banque dit que mon token existe déjà #UX.</p>
+              <div class="action">
+               <a href=""><img src="/assets/img/comments.svg" alt=""> 10 </a>
+               <a href=""><img src="/assets/img/retweet.svg" alt=""> 5 </a>
+               <a href=""><img src="/assets/img/like.svg" alt=""> 20 </a>               
+              </div>
+            </div>
+          </li>
+          <li>
+              <img src="/assets/img/avatar.png" alt="">
+              <div class="info">
+                <strong>Willian <span>@wil-g2</span></strong>
+                <p>We had to develop a system that not only told you how to get where you were going, 
+                  but also provided a little peek into what else was going on in the building.</p>
+                <img src="/assets/img/post.png" alt="">
+                <div class="action">
+                 <a href=""><img src="/assets/img/comments.svg" alt=""> 5 </a>
+                 <a href=""><img src="/assets/img/retweet.svg" alt=""> 2 </a>
+                 <a href=""><img src="/assets/img/like.svg" alt=""> 11 </a>               
+                </div>
+              </div>
+          </li>
+          <li>
+              <img src="/assets/img/avatar.png" alt="">
+              <div class="info">
+                <strong>Willian <span>@wil-g2</span></strong>
+                <p>We had to develop a system that not only told you how to get where you were going, 
+                  but also provided a little peek into what else was going on in the building.</p>
+                <img src="/assets/img/post.png" alt="">
+                <div class="action">
+                 <a href=""><img src="/assets/img/comments.svg" alt=""> 14 </a>
+                 <a href=""><img src="/assets/img/retweet.svg" alt=""> 15 </a>
+                 <a href=""><img src="/assets/img/like.svg" alt=""> 30 </a>               
+                </div>
+              </div>
+          </li>
+        </ul>
+        
+      </section>
+      
+      <aside class="widgets">
+        <div class="widget follow">
+          <div class="title">
+            <strong>Who to follow</strong>
+            <a href="">Refresh</a>
+            <a href="">View all</a>
+          </div>
+
+          <ul>
+            <li>
+              <div class="profile">
+                <img src="https://cdn.pixabay.com/photo/2016/09/01/08/25/smiley-1635456__340.png" alt="Avatar">
+                <div class="info">
+                  <strong>Spade <span>@spade_be</span></strong>
+                  <Button>Follow</Button>
+                </div>
+                <a href="">X</a>
+              </div> 
+            </li>
+            <li>
+                <div class="profile">
+                  <img src="https://cdn.pixabay.com/photo/2016/03/31/19/58/avatar-1295429__340.png" alt="Avatar">
+                  <div class="info">
+                    <strong>Spade <span>@spade_be</span></strong>
+                    <Button>Follow</Button>
+                  </div>
+                  <a href="">X</a>
+                </div> 
+              </li>
+              <li>
+                  <div class="profile">
+                    <img src="https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375__340.png" alt="Avatar">
+                    <div class="info">
+                      <strong>Spade <span>@spade_be</span></strong>
+                      <Button>Follow</Button>
+                    </div>
+                    <a href="">X</a>
+                  </div> 
+                </li>
+          </ul>          
+        </div>
+
+        <div class="friends">
+          <img src="/assets/img/friends.svg" alt="">
+          <a href="">Find friends</a>
+        </div>    
+        
+        <div class="trends">          
+            <div class="title">
+              <strong>Trends</strong>
+              <a href="">Change</a>
+            </div>
+            <div class="tags">
+              <strong>#Node.js</strong>
+              <strong>#Javascript</strong>
+              <strong>#React</strong>
+              <strong>#ReactNative</strong>
+              <strong>#ReactJS</strong>
+              <strong>#CSS</strong>
+              <strong>#Express</strong>
+            </div>
+        </div>   
+
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    let thema = document.getElementById('thema'); 
+    function chengeThema(){          
+      if (document.documentElement.style.getPropertyValue('--primary-color') != '#3bb9e3') {
+        document.documentElement.style.setProperty('--primary-color', '#3bb9e3');
+      }else{
+        document.documentElement.style.setProperty('--primary-color', 'rgb(113, 89, 193)');
+      }
+    }
+  </script>
+</body>
+</html>
