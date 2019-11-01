@@ -10,7 +10,7 @@ class PostList extends Component {
           id: 1,
           author: {
             name: "Julio Alcantara",
-            avatar: "http://url-da-imagem.com/imagem.jpg"
+            avatar: "https://avatars1.githubusercontent.com/u/2254731?s=400&v=4"
           },
           date: "04 Jun 2019",
           content: "Pessoal, alguém sabe se a Rocketseat está contratando?",
@@ -19,7 +19,7 @@ class PostList extends Component {
               id: 1,
               author: {
                 name: "Diego Fernandes",
-                avatar: "http://url-da-imagem.com/imagem.jpg"
+                avatar: "https://avatars1.githubusercontent.com/u/2254731?s=400&v=4"
               },
               content: "Conteúdo do comentário"
             }
@@ -29,7 +29,7 @@ class PostList extends Component {
           id: 2,
           author: {
             name: "Julio Alcantara",
-            avatar: "http://url-da-imagem.com/imagem.jpg"
+            avatar: "https://avatars1.githubusercontent.com/u/2254731?s=400&v=4"
           },
           date: "04 Jun 2019",
           content: "Pessoal, alguém sabe se a Rocketseat está contratando?",
@@ -38,7 +38,26 @@ class PostList extends Component {
               id: 1,
               author: {
                 name: "Diego Fernandes",
-                avatar: "http://url-da-imagem.com/imagem.jpg"
+                avatar: "https://avatars1.githubusercontent.com/u/2254731?s=400&v=4"
+              },
+              content: "Conteúdo do comentário"
+            }
+          ]
+        },
+        {
+          id: 3,
+          author: {
+            name: "Julio Alcantara",
+            avatar: "https://avatars1.githubusercontent.com/u/2254731?s=400&v=4"
+          },
+          date: "04 Jun 2019",
+          content: "Pessoal, alguém sabe se a Rocketseat está contratando?",
+          comments: [
+            {
+              id: 1,
+              author: {
+                name: "Diego Fernandes",
+                avatar: "https://avatars1.githubusercontent.com/u/2254731?s=400&v=4"
               },
               content: "Conteúdo do comentário"
             }
@@ -51,9 +70,23 @@ class PostList extends Component {
   render(){    
     return(
       <section>
-        <ul>
-          {this.state.posts.map(post => <li key={post.id}>{post.author.name}</li>)}            
-        </ul>  
+          {this.state.posts.map(post => 
+            <div className="content">
+              <ul className="post">
+                <li key={post.id}>
+                  <div className="info">
+                    <img src={post.author.avatar} alt="profile image"/>
+                    <div>
+                      <strong>{post.author.name}</strong>
+                      <span>{post.date}</span>
+                    </div>
+                  </div>
+                  <p>{post.content}</p>
+                  
+                </li>            
+              </ul>              
+            </div>
+          )}           
       </section>
     );
   }
