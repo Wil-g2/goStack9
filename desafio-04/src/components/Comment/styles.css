@@ -1,0 +1,34 @@
+ul.comment {
+  list-style: none;
+  padding: 20px;
+}
+
+ul.comment li {
+  display: flex;
+  padding-bottom: 10px;
+}
+
+ul.comment li img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+ul.comment li div.info {
+  margin-left: 10px;
+  width: 622px;
+  background: #EEEEEE;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+
+ul.comment li div.info span {
+  
+  font-style: normal;
+  font-size: 13px;
+  line-height: 20px;
+  /* or 154% */
+
+  color: #3E3E3E;
+}
