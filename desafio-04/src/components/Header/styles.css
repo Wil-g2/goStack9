@@ -17,6 +17,10 @@ header div.profile {
   font-weight: bold;
 }
 
+header div.profile i {
+  margin-left: 5px;
+}
+
 header img {
   margin: 0 40px;
 }
