@@ -44,3 +44,24 @@ export const SubmitButton = styled.button.attrs({
   justify-content: center;
   align-items: center;
 `;
+
+export const ListRepo = styled.ul`
+  list-style: none;
+  margin-top: 20px;
+
+  li {
+    padding: 15px 0;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+
+    & + li {
+      border-top: 1px solid #eee;
+    }
+    a {
+      text-decoration: none;
+      color: #7159c1;
+    }
+  }
+`;

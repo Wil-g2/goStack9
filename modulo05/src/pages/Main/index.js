@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { FaGithubAlt, FaPlus } from 'react-icons/fa';
-import { Container, Form, SubmitButton } from './styles';
+import axios from '../../services/api';
+import { Container, Form, SubmitButton, ListRepo } from './styles';
 
 export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
       newRepo: '',
+      repositories: [],
     };
   }
 
@@ -15,13 +18,36 @@ export default class Main extends Component {
     this.setState({ newRepo: e.target.value });
   };
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
-    console.log('teste');
+    const res = await axios.get(`/repos/${this.state.newRepo}`);
+    const data = {
+      name: res.data.full_name,
+    };
+
+    const { repositories } = this.state;
+    repositories.push(data);
+
+    this.setState({ ...repositories, newRepo: '' });
+    localStorage.setItem('repositories', JSON.stringify(repositories));
   };
 
+  componentDidMount() {
+    const repositories = localStorage.getItem('repositories');
+    if (repositories) {
+      this.setState({ repositories: JSON.parse(repositories) });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    const { repositories } = this.state;
+    if (repositories !== prevState.repositories) {
+      localStorage.setItem('repositories', JSON.stringify(repositories));
+    }
+  }
+
   render() {
-    const { newRepo } = this.state;
+    const { newRepo, repositories } = this.state;
     return (
       <Container>
         <h1>
@@ -39,6 +65,15 @@ export default class Main extends Component {
             <FaPlus color="#fff" size={14} />
           </SubmitButton>
         </Form>
+
+        <ListRepo>
+          {repositories.map(r => (
+            <li key={r.name}>
+              <span>{r.name}</span>
+              <Link to="repository">detalhes</Link>
+            </li>
+          ))}
+        </ListRepo>
       </Container>
     );
   }
