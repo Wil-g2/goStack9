@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { FaGithubAlt, FaPlus } from 'react-icons/fa';
+import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
 import axios from '../../services/api';
 import Container from '../../components/Container';
 import { Form, SubmitButton, ListRepo } from './styles';
@@ -12,6 +12,7 @@ export default class Main extends Component {
     this.state = {
       newRepo: '',
       repositories: [],
+      loading: false,
     };
   }
 
@@ -21,15 +22,21 @@ export default class Main extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
-    const res = await axios.get(`/repos/${this.state.newRepo}`);
+
+    this.setState({ loading: true });
+
+    const { newRepo, repositories } = this.state;
+
+    const res = await axios.get(`/repos/${newRepo}`);
     const data = {
       name: res.data.full_name,
     };
 
-    const { repositories } = this.state;
-    repositories.push(data);
-
-    this.setState({ ...repositories, newRepo: '' });
+    this.setState({
+      repositories: [...repositories, data],
+      newRepo: '',
+      loading: false,
+    });
     localStorage.setItem('repositories', JSON.stringify(repositories));
   };
 
@@ -48,7 +55,7 @@ export default class Main extends Component {
   }
 
   render() {
-    const { newRepo, repositories } = this.state;
+    const { newRepo, repositories, loading } = this.state;
     return (
       <Container>
         <h1>
@@ -62,8 +69,12 @@ export default class Main extends Component {
             value={newRepo}
             onChange={this.handleInputChange}
           />
-          <SubmitButton>
-            <FaPlus color="#fff" size={14} />
+          <SubmitButton loading={loading}>
+            {loading ? (
+              <FaSpinner color="#fff" size={14} />
+            ) : (
+              <FaPlus color="#fff" size={14} />
+            )}
           </SubmitButton>
         </Form>
 
