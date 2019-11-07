@@ -1,36 +1,52 @@
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
-import axios from '../../services/api';
+import PropTypes from 'prop-types';
+import api from '../../services/api';
 import { Container } from './styles';
 
 class Repository extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      repositories: '',
-    };
-  }
-
-  componentDidMount() {
-    this.getRepos();
-  }
-
-  getRepos = async () => {
-    const { repository } = this.props.match.params;
-    const res = await axios.get(`/repos/${decodeURIComponent(repository)}`);
-    const { data } = res;
-    console.log(data);
-    this.setState({ repositories: data });
+  static propTypes = {
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        repository: PropTypes.string,
+      }),
+    }).isRequired,
   };
 
+  state = {
+    repository: {},
+    issues: [],
+    loading: true,
+  };
+
+  async componentDidMount() {
+    const { match } = this.props;
+    const repoName = decodeURIComponent(match.params.repository);
+    const [rep, issues] = await Promise.all([
+      api.get(`/repos/${repoName}`),
+      api.get(`/repos/${repoName}/issues`, {
+        params: {
+          state: 'open',
+          per_page: 5,
+        },
+      }),
+    ]);
+    this.setState({
+      repositories: rep.data,
+      issues: issues.data,
+      loading: false,
+    });
+  }
+
   render() {
-    const { repositories } = this.state;
+    const { repository, issues, loading } = this.state;
+    console.log(issues, repository);
     return (
       <Container>
         <div>
           <h1>Repositories</h1>
-          <strong>{repositories.id}</strong>
+          <strong />
           <Link to="/">Voltar</Link>
         </div>
       </Container>
