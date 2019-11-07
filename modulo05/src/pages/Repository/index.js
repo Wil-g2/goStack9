@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ReactLoading from 'react-loading';
 import api from '../../services/api';
-import { Container } from './styles';
+import Container from '../../components/Container';
+import { Loading } from './styles';
 
 class Repository extends Component {
   static propTypes = {
@@ -42,6 +44,13 @@ class Repository extends Component {
   render() {
     const { repository, issues, loading } = this.state;
     console.log(issues, repository);
+    if (loading) {
+      return (
+        <Loading>
+          <ReactLoading type="spin" color="#fff" height={100} width={100} />
+        </Loading>
+      );
+    }
     return (
       <Container>
         <div>
