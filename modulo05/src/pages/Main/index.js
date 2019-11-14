@@ -13,31 +13,44 @@ export default class Main extends Component {
       newRepo: '',
       repositories: [],
       loading: false,
+      error: null,
     };
   }
 
   handleInputChange = e => {
-    this.setState({ newRepo: e.target.value });
+    this.setState({ newRepo: e.target.value, error: null });
   };
 
   handleSubmit = async e => {
     e.preventDefault();
 
-    this.setState({ loading: true });
+    this.setState({ loading: true, error: false });
 
-    const { newRepo, repositories } = this.state;
+    try {
+      const { newRepo, repositories } = this.state;
+      const res = await axios.get(`/repos/${newRepo}`);
 
-    const res = await axios.get(`/repos/${newRepo}`);
-    const data = {
-      name: res.data.full_name,
-    };
+      const data = {
+        name: res.data.full_name,
+      };
 
-    this.setState({
-      repositories: [...repositories, data],
-      newRepo: '',
-      loading: false,
-    });
-    localStorage.setItem('repositories', JSON.stringify(repositories));
+      if (newRepo === '') throw 'Informe o repositório do Github.';
+
+      const hasRepo = repositories.find(r => r.name === newRepo);
+
+      if (hasRepo) throw 'Existe repositórios duplicados.';
+
+      this.setState({
+        repositories: [...repositories, data],
+        newRepo: '',
+      });
+      localStorage.setItem('repositories', JSON.stringify(repositories));
+    } catch (error) {
+      alert(error);
+      this.setState({ error: true });
+    } finally {
+      this.setState({ loading: false });
+    }
   };
 
   componentDidMount() {
@@ -55,14 +68,14 @@ export default class Main extends Component {
   }
 
   render() {
-    const { newRepo, repositories, loading } = this.state;
+    const { newRepo, repositories, loading, error } = this.state;
     return (
       <Container>
         <h1>
           <FaGithubAlt /> Repositórios
         </h1>
 
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} error={error}>
           <input
             type="text"
             placeholder="Adicionar repostiório"
