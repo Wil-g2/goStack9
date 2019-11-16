@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactLoading from 'react-loading';
+import Select from 'react-select';
 import api from '../../services/api';
 import Container from '../../components/Container';
 import { Loading, Owner, IssueList, IssueFilter, Pagination } from './styles';
@@ -20,7 +21,12 @@ class Repository extends Component {
     repository: {},
     issues: [],
     loading: true,
-    filterIndex: 0,
+    filters: [
+      { value: 'all', label: 'Todas' },
+      { value: 'open', label: 'Abertas' },
+      { value: 'closed', label: 'Fechadas' },
+    ],
+    selectedValue: { value: 'all', label: 'Todas' },
     page: 1,
   };
 
@@ -43,30 +49,51 @@ class Repository extends Component {
     });
   }
 
-  filterList = event => {
-    const { issues } = this.state;
-    const filter = issues.filter(issue => {
-      return issue.state === event.target.value;
-    });
-
-    console.log(filter);
+  handleChange = async selectedValue => {
+    await this.setState({ selectedValue, page: 1 }, () => this.pagination());
   };
 
-  pagination = page => {
+  pagination = async () => {
+    console.log('teste');
     const { match } = this.props;
+    const { selectedValue, page } = this.state;
     const repoName = decodeURIComponent(match.params.repository);
-    if (!page === undefined || !page === null) {
-      api.get(`/repos/${repoName}/issues?page=${page}`, {
-        params: {
-          per_page: 5,
-        },
-      });
+    const response = await api.get(`/repos/${repoName}/issues`, {
+      params: {
+        state: selectedValue.value,
+        per_page: 5,
+        page,
+      },
+    });
+    this.setState({ issues: response.data });
+  };
+
+  prevPage = () => {
+    const { page } = this.state;
+    if (page > 1) {
+      const pageNumber = page - 1;
+      this.setState({ page: pageNumber });
+      this.pagination();
     }
   };
 
+  nextPage = () => {
+    const { page } = this.state;
+    const pageNumber = page + 1;
+    this.setState({ page: pageNumber });
+    this.pagination();
+  };
+
   render() {
-    const { repository, issues, loading, filters } = this.state;
-    console.log(issues, repository);
+    const {
+      repository,
+      issues,
+      loading,
+      page,
+      filters,
+      selectedValue,
+    } = this.state;
+
     if (loading) {
       return (
         <Loading>
@@ -86,11 +113,12 @@ class Repository extends Component {
 
         <IssueList>
           <IssueFilter>
-            <select id="filter" onChange={this.filterList}>
-              <option value="all">Todas</option>
-              <option value="open">Aberta</option>
-              <option value="closed">Fechada</option>
-            </select>
+            <Select
+              options={filters}
+              onChange={this.handleChange}
+              value={selectedValue}
+              defaultValue={filters[1]}
+            />
           </IssueFilter>
           {issues.map(issue => (
             <li key={String(issue.id)}>
@@ -107,8 +135,13 @@ class Repository extends Component {
             </li>
           ))}
           <Pagination>
-            <button>Antirior</button>
-            <button>Proximo</button>
+            <button type="button" onClick={this.prevPage} disabled={page < 2}>
+              Antirior
+            </button>
+            <span>Página {page}</span>
+            <button type="button" onClick={this.nextPage}>
+              Proximo
+            </button>
           </Pagination>
         </IssueList>
       </Container>
