@@ -101,21 +101,27 @@ export const IssueList = styled.ul`
 `;
 
 export const IssueFilter = styled.div`
-  display: flex;
-  justify-content: center;
   padding-bottom: 15px;
-  select {
-    border-radius: 4px;
-    outline: 0;
-    border: 0;
-    padding: 8px;
-    margin: 0 0.25rem;
-    border: solid 1px #7159c1;
-  }
+  max-width: 300px;
+  margin: 0 auto;
 `;
 
 export const Pagination = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  button {
+    background: #7151c1;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+
+    &:hover {
+      background: rgba(113, 81, 193, 0.8);
+    }
+  }
 `;
