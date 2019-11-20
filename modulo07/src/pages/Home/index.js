@@ -1,100 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { MdShoppingCart } from 'react-icons/md';
 import { ProductList } from './styles';
+import api from '../../services/api';
+import { formatPrice } from '../../util/format';
 
-export default function Home() {
-  return (
-    <ProductList>
-      <li>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTP6WHxVINA1WLM4WBZj-UKJ-CNU6mTy0SoipoNy98WFBYHr-SH"
-          alt=""
-        />
-        <strong> Tênis Nike Air</strong>
-        <span> R$ 259,90 </span>
+export default class Home extends Component {
+  state = {
+    products: [],
+  };
 
-        <button type="button">
-          <div>
-            <MdShoppingCart color="#fff" size={16} />
-          </div>
-          <span> ADICIONAR AO CARRINHO </span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTP6WHxVINA1WLM4WBZj-UKJ-CNU6mTy0SoipoNy98WFBYHr-SH"
-          alt=""
-        />
-        <strong> Tênis Nike Air</strong>
-        <span> R$ 259,90 </span>
+  async componentDidMount() {
+    const response = await api.get('/products');
+    const data = response.data.map(product => ({
+      ...product,
+      priceFormatted: formatPrice(product.price),
+    }));
+    this.setState({ products: data });
+  }
 
-        <button type="button">
-          <div>
-            <MdShoppingCart color="#fff" size={16} />
-          </div>
-          <span> ADICIONAR AO CARRINHO </span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTP6WHxVINA1WLM4WBZj-UKJ-CNU6mTy0SoipoNy98WFBYHr-SH"
-          alt=""
-        />
-        <strong> Tênis Nike Air</strong>
-        <span> R$ 259,90 </span>
+  render() {
+    const { products } = this.state;
+    console.log(products);
+    return (
+      <ProductList>
+        {products.map(p => (
+          <li key={p.id}>
+            <img src={p.image} alt={p.title} />
+            <strong> {p.title}</strong>
+            <span> {p.priceFormatted} </span>
 
-        <button type="button">
-          <div>
-            <MdShoppingCart color="#fff" size={16} />
-          </div>
-          <span> ADICIONAR AO CARRINHO </span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTP6WHxVINA1WLM4WBZj-UKJ-CNU6mTy0SoipoNy98WFBYHr-SH"
-          alt=""
-        />
-        <strong> Tênis Nike Air</strong>
-        <span> R$ 259,90 </span>
-
-        <button type="button">
-          <div>
-            <MdShoppingCart color="#fff" size={16} />
-          </div>
-          <span> ADICIONAR AO CARRINHO </span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTP6WHxVINA1WLM4WBZj-UKJ-CNU6mTy0SoipoNy98WFBYHr-SH"
-          alt=""
-        />
-        <strong> Tênis Nike Air</strong>
-        <span> R$ 259,90 </span>
-
-        <button type="button">
-          <div>
-            <MdShoppingCart color="#fff" size={16} />
-          </div>
-          <span> ADICIONAR AO CARRINHO </span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTP6WHxVINA1WLM4WBZj-UKJ-CNU6mTy0SoipoNy98WFBYHr-SH"
-          alt=""
-        />
-        <strong> Tênis Nike Air</strong>
-        <span> R$ 259,90 </span>
-
-        <button type="button">
-          <div>
-            <MdShoppingCart color="#fff" size={16} />
-          </div>
-          <span> ADICIONAR AO CARRINHO </span>
-        </button>
-      </li>
-    </ProductList>
-  );
+            <button type="button">
+              <div>
+                <MdShoppingCart color="#fff" size={16} />
+              </div>
+              <span> ADICIONAR AO CARRINHO </span>
+            </button>
+          </li>
+        ))}
+      </ProductList>
+    );
+  }
 }
