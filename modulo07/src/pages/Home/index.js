@@ -20,9 +20,9 @@ class Home extends Component {
   }
 
   handleAddProduct = product => {
-    const { disparch } = this.props;
+    const { dispatch } = this.props;
 
-    disparch({
+    dispatch({
       type: 'ADD_TO_CART',
       product,
     });
