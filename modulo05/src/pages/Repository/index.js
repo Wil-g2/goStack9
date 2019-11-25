@@ -54,7 +54,6 @@ class Repository extends Component {
   };
 
   pagination = async () => {
-    console.log('teste');
     const { match } = this.props;
     const { selectedValue, page } = this.state;
     const repoName = decodeURIComponent(match.params.repository);
