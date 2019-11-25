@@ -112,13 +112,15 @@ export const Pagination = styled.div`
   align-items: center;
 
   button {
-    background: #7151c1;
+    background: #7159c1;
     color: #fff;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
     margin-top: 10px;
     padding: 10px;
     border-radius: 5px;
+    outline-color: #7159c1;
+    border-color: #7159c1;
 
     &:hover {
       background: rgba(113, 81, 193, 0.8);
