@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
 import axios from '../../services/api';
 import Container from '../../components/Container';
@@ -26,27 +26,31 @@ export default class Main extends Component {
 
     this.setState({ loading: true, error: false });
 
-    try {
-      const { newRepo, repositories } = this.state;
-      const res = await axios.get(`/repos/${newRepo}`);
+    const { newRepo, repositories } = this.state;
 
+    try {
+      if (newRepo === '') throw new Error('Informe o repositório do Github.');
+
+      const res = await axios.get(`/repos/${newRepo}`);
       const data = {
         name: res.data.full_name,
       };
 
-      if (newRepo === '') throw 'Informe o repositório do Github.';
-
       const hasRepo = repositories.find(r => r.name === newRepo);
 
-      if (hasRepo) throw 'Existe repositórios duplicados.';
+      if (hasRepo) throw new Error('Repositório já existe.');
 
       this.setState({
         repositories: [...repositories, data],
         newRepo: '',
       });
-      localStorage.setItem('repositories', JSON.stringify(repositories));
+      toast.info('Repositório adicionado com sucesso.');
     } catch (error) {
-      alert(error);
+      if (error.response && error.response.status === 404) {
+        toast.error('Repositório não encontrado');
+      } else {
+        toast.error(String(error));
+      }
       this.setState({ error: true });
     } finally {
       this.setState({ loading: false });
@@ -62,7 +66,7 @@ export default class Main extends Component {
 
   componentDidUpdate(_, prevState) {
     const { repositories } = this.state;
-    if (repositories !== prevState.repositories) {
+    if (prevState.repositories !== repositories) {
       localStorage.setItem('repositories', JSON.stringify(repositories));
     }
   }
